@@ -92,12 +92,62 @@ func (this *customerViews) del() {
 
 }
 
-// 修改顾客信息
-func (this *customerViews) modify() {
+// 更新顾客信息
+func (this *customerViews) updated() {
 
-	
+	fmt.Println("请输入要更新的顾客id: ")
+	id := 0
+	fmt.Scanln(&id)
+
+	existed := this.isExistId(id)
+	// 判断该 “顾客id” 是否存在
+	if existed { // existed 为 true，则证明有该“顾客的id”
+
+		name := ""
+		gender := ""
+		age := ""
+		phone := ""
+		email := ""
+		
+		fmt.Println("请输入姓名: ")
+		fmt.Scanln(&name)
+		fmt.Println("请输入性别: ")
+		fmt.Scanln(&gender)
+		fmt.Println("请输入年龄: ")
+		fmt.Scanln(&age)
+		fmt.Println("请输入手机号码: ")
+		fmt.Scanln(&phone)
+		fmt.Println("请输入邮箱: ")
+		fmt.Scanln(&email)
+		
+		this.update(id,name,gender,age,phone,email)
+
+	}else {
+
+		return // 没有该顾客id,结束方法
+
+	}
 
 }
+
+// 更新顾客信息的附加方法
+func (this *customerViews) update(id int, name, gender, age, phone, email string) {
+
+	// 把顾客“id号”传入方法,和相关信息
+	this.customcerServices.Update(id,name,gender,age,phone,email)
+
+}
+
+// 把 "顾客id号” 传入,判断是否存在这个顾客id
+func (this *customerViews) isExistId(id int) bool {
+
+	isExist := this.customcerServices.IsExistId(id)
+
+	return isExist
+
+}
+
+
 
 // 退出程序
 func (this *customerViews) quit() {
@@ -157,7 +207,7 @@ func (this *customerViews)mainMenu() {
 				
 			case "2":
 				fmt.Println("修 改 客 户")
-				this.modify()
+				this.updated()
 			
 			case "3":
 				fmt.Println("删 除 客 户")
@@ -171,7 +221,7 @@ func (this *customerViews)mainMenu() {
 				this.quit()
 
 			default :
-				fmt.Println("您输入的选项不存在,请重新输入")
+				fmt.Println("您输入的选项不存在,请重新输入!")
 		}
 
 		// 判断exit是否为false

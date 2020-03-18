@@ -16,7 +16,6 @@ type CustomerServices struct {
 	// 新顾客的编号
 
 	customeNum int
-
 }
 
 // 工厂模式一
@@ -76,7 +75,7 @@ func (this *CustomerServices) Del(id int) {
 }
 
 // 通过顾客id去查找对应的切片里的顾客下标，并返回该下标
-func (this *CustomerServices)FindById(id int) int {
+func (this *CustomerServices) FindById(id int) int {
 
 	index := -1 // 预定义一个标识符，默认为“-1”
 
@@ -96,12 +95,40 @@ func (this *CustomerServices)FindById(id int) int {
 	return index
 }
 
+// 更新顾客信息
+func (this *CustomerServices) Update(id int, name, gender, age, phone, email string) {
 
+	haveId := this.FindById(id)
 
+	if haveId == -1 {  // 如果haveId等于-1,则证明没有该id号的顾客信息
 
-func (this *CustomerServices) Modify() {
+		return
+		
+	}else {
+				
+		// 更新该顾客的信息
+		this.customers[haveId].Name = name
+		this.customers[haveId].Gender = gender
+		this.customers[haveId].Age = age
+		this.customers[haveId].Phone = phone
+		this.customers[haveId].Email = email
+		
+	}
 
+}
 
+// 判断是否存在该顾客id，返回一个bool值
+func (this *CustomerServices) IsExistId(id int) bool {
+
+	// 把 "顾客id号” 传入
+	haveId := this.FindById(id)
+
+	if haveId != -1 {  // 如果haveId等于-1,则证明没有该id号的顾客信息
+
+		return true
+		
+	}
+	return false
 }
 
 
