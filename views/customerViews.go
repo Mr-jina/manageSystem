@@ -111,7 +111,6 @@ func (this *customerViews) quit() {
 		if this.key == "Y" || this.key == "y" || this.key == "N" || this.key == "n" {
 		
 			this.exit = false
-			// break
 
 		}else {
 
@@ -121,7 +120,6 @@ func (this *customerViews) quit() {
 
 		if this.key == "Y" || this.key == "y" {
 			
-			// this.exit = false
 			break // 确定是y/Y , 退出死循环
 
 		}
