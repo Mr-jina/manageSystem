@@ -21,25 +21,6 @@ type customerViews struct {
 
 }
 
-// 显示所有的顾客信息
-func (this *customerViews) find() {
-
-	// 首先，获取到当前所有的顾客信息(在切片中)
-	customers := this.customcerServices.List()
-
-	// 显示
-	fmt.Println("--------------------顾客列表-----------------")
-	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
-
-	// for-rang 遍历 list切片
-	for _, v := range customers {
-			
-		fmt.Println(v.GetInfo())
-		
-	}	
-
-	fmt.Println("------------------顾客列表完成----------------")
-}
 
 // 添加顾客信息
 func (this *customerViews) add() {
@@ -99,9 +80,11 @@ func (this *customerViews) updated() {
 	id := 0
 	fmt.Scanln(&id)
 
-	existed := this.isExistId(id)
+	// 把 "顾客id号” 传入,判断是否存在这个顾客id
+	isExist := this.customcerServices.IsExistId(id)
+
 	// 判断该 “顾客id” 是否存在
-	if existed { // existed 为 true，则证明有该“顾客的id”
+	if isExist { // existed 为 true，则证明有该“顾客的id”
 
 		name := ""
 		gender := ""
@@ -120,34 +103,37 @@ func (this *customerViews) updated() {
 		fmt.Println("请输入邮箱: ")
 		fmt.Scanln(&email)
 		
-		this.update(id,name,gender,age,phone,email)
+		// 更新顾客信息
+		this.customcerServices.Update(id,name,gender,age,phone,email)
 
 	}else {
 
+		fmt.Println("该用户不存在,请重新输入！")
 		return // 没有该顾客id,结束方法
 
 	}
 
 }
 
-// 更新顾客信息的附加方法
-func (this *customerViews) update(id int, name, gender, age, phone, email string) {
+// 显示顾客信息
+func (this *customerViews) find() {
 
-	// 把顾客“id号”传入方法,和相关信息
-	this.customcerServices.Update(id,name,gender,age,phone,email)
+	// 首先，获取到当前所有的顾客信息(在切片中)
+	customers := this.customcerServices.List()
 
+	// 显示
+	fmt.Println("--------------------顾客列表-----------------")
+	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
+
+	// for-rang 遍历 list切片
+	for _, v := range customers {
+			
+		fmt.Println(v.GetInfo())
+		
+	}	
+
+	fmt.Println("------------------顾客列表完成----------------")
 }
-
-// 把 "顾客id号” 传入,判断是否存在这个顾客id
-func (this *customerViews) isExistId(id int) bool {
-
-	isExist := this.customcerServices.IsExistId(id)
-
-	return isExist
-
-}
-
-
 
 // 退出程序
 func (this *customerViews) quit() {
@@ -181,8 +167,7 @@ func (this *customerViews) quit() {
 
 
 //主菜单 -- 调用具体功能方法
-
-func (this *customerViews)mainMenu() {
+func (this *customerViews) mainMenu() {
 
 
 	for {
