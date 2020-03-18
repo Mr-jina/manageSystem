@@ -31,8 +31,6 @@ func NewCustomerServices() *CustomerServices {
 
 	customer1 := models.NewCustomer(1,"Mr-jin","female","22","10086","1040037245@qq.com") // 初始化一个customer对象
 	customer2 := models.NewCustomer(2,"aa","male","22","10086","1040037245@qq.com") // 初始化一个customer对象
-	// customer3 := models.NewCustomer(3,"bb","female","22","10086","1040037245@qq.com") // 初始化一个customer对象
-	// customer4 := models.NewCustomer(4,"cc","male","22","10086","1040037245@qq.com") // 初始化一个customer对象
 	
 	// 将 customer1 存入 customers切片 里
 	CustomerServices.customers = append(CustomerServices.customers,customer1,customer2)
