@@ -3,6 +3,7 @@
 package services
 
 import(
+	"fmt"
 	"../models"
 )
 
@@ -20,18 +21,16 @@ type CustomerServices struct {
 // 工厂模式一
 func NewCustomerServices() *CustomerServices {
 
-	// var p *Person = &Person{}  返回结构体指针！调用Person结构体里的属性时,直接使用p.name,go内部已经优化了指针格式
+	// 知识点:  var p *Person = &Person{}  返回结构体指针！调用Person结构体里的属性时,直接使用p.name,go内部已经优化了指针格式
 	
 	// 为了能够看到有顾客在切片中，我们初始化一个顾客信息
 	CustomerServices := &CustomerServices{} 
 
-	CustomerServices.customeNum = 1 // 顾客编号为1
-
-	customer1 := models.NewCustomer(1,"Mr-jin","female","22","10086","1040037245@qq.com") // 初始化一个customer对象
-	customer2 := models.NewCustomer(2,"aa","male","22","10086","1040037245@qq.com") // 初始化一个customer对象
-	
+	// 预加入一个 “顾客对象数据”
+	// CustomerServices.customeNum = 1 // 顾客编号为1
+	// customer1 := models.NewCustomer(1,"Mr-jin","female","22","10086","1040037245@qq.com") // 初始化一个customer对象
 	// 将 customer1 存入 customers切片 里
-	CustomerServices.customers = append(CustomerServices.customers,customer1,customer2)
+	// CustomerServices.customers = append(CustomerServices.customers,customer1)
 
 	return CustomerServices
 }
@@ -52,7 +51,6 @@ func (this *CustomerServices) Add(customer models.Customer)bool {
 
 }
 
-
 // 删除 customers切片 里的 指定customer顾客信息
 func (this *CustomerServices) Del(id int) {
 
@@ -62,13 +60,17 @@ func (this *CustomerServices) Del(id int) {
 	if index == -1 {
 
 		// 则表示该顾客切片里没有该顾客的id，也就是没有该顾客的信息
+		fmt.Println("该顾客切片里没有该顾客的id,请重新输入id！")
 		return // 结束这个方法的所有操作！
 		
-	}else {
-		
-		// 如果有包含这个顾客的id，则删除数据
-		// 将删除点前后的元素连接起来
-		this.customers = append(this.customers[:index], this.customers[index+1:]...)
+		}else {
+			
+			// 如果有包含这个顾客的id，则删除数据
+			// 将删除点前后的元素连接起来
+			this.customers = append(this.customers[:index], this.customers[index+1:]...)
+
+			fmt.Println("删除该顾客数据成功！")
+
 	}
 
 }

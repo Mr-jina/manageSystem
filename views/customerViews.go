@@ -121,18 +121,30 @@ func (this *customerViews) find() {
 	// 首先，获取到当前所有的顾客信息(在切片中)
 	customers := this.customcerServices.List()
 
-	// 显示
-	fmt.Println("--------------------顾客列表-----------------")
-	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
+	// 判断 customers 列表里是否有数据
+	if len(customers) >= 1 {
 
-	// for-rang 遍历 list切片
-	for _, v := range customers {
+		// 如果有,则输出提示信息
+		// 显示
+		fmt.Println("--------------------顾客列表-----------------")
+		fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
+
+		// for-rang 遍历 list切片
+		for _, v := range customers {
+				
+			fmt.Println(v.GetInfo())
 			
-		fmt.Println(v.GetInfo())
-		
-	}	
+		}	
 
-	fmt.Println("------------------顾客列表完成----------------")
+		fmt.Println("------------------顾客列表完成----------------")
+			
+	}else {
+
+		// 否则,提示该列表里没有数据
+		fmt.Println("该列表里没有数据!")
+
+	}
+
 }
 
 // 退出程序
